@@ -1,4 +1,4 @@
-# SeedGoat
+# SeedGoat v1.0
 
 PRNG and seeding algorithm wrapper for JavaScript
 
@@ -11,7 +11,7 @@ PRNG and seeding algorithm wrapper for JavaScript
 ## Setting up
 Put this in you HTML before your script:
 ```html
-<script src=""></script>
+<script src="https://cdn.jsdelivr.net/gh/ImIcterine/seedgoat@main/seedgoat.js"></script>
 ```
 
 ## Creating an RNG
