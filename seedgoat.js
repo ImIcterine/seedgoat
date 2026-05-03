@@ -1,9 +1,27 @@
-// SeedGoat v1.0
+// SeedGoat v1.1
+
+// string to hash with xmur32
+function normalizeSeed(seed) {
+    if (typeof seed === "number" && Number.isFinite(seed)) {
+        return seed >>> 0
+    }
+    
+    const str = String(seed)
+    
+    let h = 1779033703 ^ str.length
+    for (let i = 0; i < str.length; i++) {
+        h = Math.imul(h ^ str.charCodeAt(i), 3432918353)
+        h = (h << 13) | (h >>> 19)
+    }
+    h = Math.imul(h ^ (h >>> 16), 2246822507)
+    h = Math.imul(h ^ (h >>> 13), 3266489909)
+    return (h ^= h >>> 16) >>> 0
+}
 
 // mulberry32
 class mulberry32 {
     constructor(seed) {
-        this._state = seed >>> 0
+        this._state = normalizeSeed(seed)
     }
 
     _next() {
@@ -35,7 +53,7 @@ class mulberry32 {
 // xorshift32
 class xorshift32 {
     constructor(seed) {
-        this._state = seed >>> 0
+        this._state = normalizeSeed(seed)
     }
 
     _next() {
@@ -67,26 +85,19 @@ class xorshift32 {
 // SFC32
 class sfc32 {
     constructor(seed) {
-        const sm = this._splitmix32(seed)
-
-        this.a = sm()
-        this.b = sm()
-        this.c = sm()
-        this.d = sm()
-    }
-
-    _splitmix32(seed) {
-        let state = seed >>> 0
-
-        return function () {
-            state += 0x9E3779B9
-
-            let t = state
+        let h = normalizeSeed(seed)
+        
+        const nextSeed = () => {
+            h += 0x9E3779B9
+            let t = h
             t = Math.imul(t ^ (t >>> 16), 0x85EBCA6B)
             t = Math.imul(t ^ (t >>> 13), 0xC2B2AE35)
-
             return (t ^ (t >>> 16)) >>> 0
         }
+        this.a = nextSeed()
+        this.b = nextSeed()
+        this.c = nextSeed()
+        this.d = nextSeed()
     }
 
     _next() {
