@@ -1,3 +1,5 @@
+// SeedGoat v1.1
+
 // string to hash with xmur32
 function normalizeSeed(seed) {
     if (typeof seed === "number" && Number.isFinite(seed)) {
