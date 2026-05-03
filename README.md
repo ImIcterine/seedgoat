@@ -1,6 +1,8 @@
-# SeedGoat v1.0
+# SeedGoat v1.1
 
-PRNG and seeding algorithm wrapper for JavaScript
+SeedGoat is a PRNG and seeding algorithm wrapper for JavaScript.
+Created by ImIcterine.
+Now supports non-numeric seeds.
 
 ### Currently supports:
 - Mulberry32
